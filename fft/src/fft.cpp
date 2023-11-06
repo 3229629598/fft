@@ -10,15 +10,11 @@ FFT::FFT(uint16_t n)
     memset(fft_data,0,sizeof(fft_data));
     fft_tag=(uint16_t*)malloc(fft_n*sizeof(uint16_t));
     memset(fft_tag,0,sizeof(fft_tag));
-    w_array=(complex***)malloc(storey_sum*sizeof(complex**));
+    w_array=(double**)malloc(storey_sum*sizeof(double*));
     for(int i=0; i<storey_sum; ++i)
     {
-        w_array[i]=(complex**)malloc(fft_n*sizeof(complex*));
-        for(int j=0; j<fft_n; ++j)
-        {
-            w_array[i][j]=(complex*)malloc(fft_n*sizeof(complex));
-            memset(w_array[i][j],0,sizeof(w_array[i][j]));
-        }
+        w_array[i]=(double*)malloc(fft_n*sizeof(double));
+        memset(w_array[i],0,sizeof(w_array[i]));
     }
     fft_result=(complex*)malloc(fft_n*sizeof(complex));
     memset(fft_result,0,sizeof(fft_result));
@@ -57,7 +53,7 @@ void FFT::rader_array(uint16_t* array)
     }
 }
 
-void FFT::trigonometric_matrix(complex*** w_array)
+void FFT::trigonometric_matrix(double** w_array)
 {
     for(uint16_t storey_cnt=0, n_half=0; storey_cnt<storey_sum; ++storey_cnt)
     {
@@ -67,8 +63,8 @@ void FFT::trigonometric_matrix(complex*** w_array)
             for(uint16_t k=0; k<n_half; ++k)
             {
                 double w_ang=-M_PI*k/n_half;
-                w_array[storey_cnt][pair_site][k].real=cos(w_ang);
-                w_array[storey_cnt][pair_site][k].imag=sin(w_ang);
+                w_array[storey_cnt][pair_site+k]=cos(w_ang);
+                w_array[storey_cnt][pair_site+k+n_half]=sin(w_ang);
             }
         }
     }
@@ -88,8 +84,8 @@ void FFT::fft(double* fft_data, complex* fft_result)
         {
             for(uint16_t k=0; k<n_half; ++k)
             {
-                w.real=w_array[storey_cnt][pair_site][k].real;
-                w.imag=w_array[storey_cnt][pair_site][k].imag;
+                w.real=w_array[storey_cnt][pair_site+k];
+                w.imag=w_array[storey_cnt][pair_site+k+n_half];
                 a.real=fft_result[pair_site+k].real;
                 a.imag=fft_result[pair_site+k].imag;
                 b.real=fft_result[pair_site+k+n_half].real;

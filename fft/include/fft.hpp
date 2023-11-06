@@ -34,11 +34,11 @@ class FFT
     uint16_t storey_sum;
     uint16_t double_size;
     uint16_t* fft_tag;
-    complex*** w_array;
+    double** w_array;
     complex a, b, w;
 
     void rader_array(uint16_t* array);
-    void trigonometric_matrix(complex*** w_array);
+    void trigonometric_matrix(double** w_array);
 };
 
 #endif
