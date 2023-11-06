@@ -7,15 +7,21 @@ FFT::FFT(uint16_t n)
     double_size=sizeof(double);
     
     fft_data=(double*)malloc(fft_n*sizeof(double));
+    memset(fft_data,0,sizeof(fft_data));
     fft_tag=(uint16_t*)malloc(fft_n*sizeof(uint16_t));
+    memset(fft_tag,0,sizeof(fft_tag));
     w_array=(complex***)malloc(storey_sum*sizeof(complex**));
     for(int i=0; i<storey_sum; ++i)
     {
         w_array[i]=(complex**)malloc(fft_n*sizeof(complex*));
         for(int j=0; j<fft_n; ++j)
+        {
             w_array[i][j]=(complex*)malloc(fft_n*sizeof(complex));
+            memset(w_array[i][j],0,sizeof(w_array[i][j]));
+        }
     }
     fft_result=(complex*)malloc(fft_n*sizeof(complex));
+    memset(fft_result,0,sizeof(fft_result));
 
     rader_array(fft_tag);
     trigonometric_matrix(w_array);
@@ -36,6 +42,7 @@ FFT::~FFT()
 void FFT::rader_array(uint16_t* array)
 {
     uint16_t k=fft_n/2;
+    array[0]=0;
     array[fft_n-1]=fft_n-1;
     for(uint16_t i=1; i<fft_n-1; ++i) 
     {
@@ -67,7 +74,7 @@ void FFT::trigonometric_matrix(complex*** w_array)
     }
 }
 
-void FFT::fft(double* fft_data, uint16_t* fft_tag, complex*** w_array, complex* fft_result)
+void FFT::fft(double* fft_data, complex* fft_result)
 {
     for(uint16_t i=0; i<fft_n; ++i)
     {
@@ -95,4 +102,35 @@ void FFT::fft(double* fft_data, uint16_t* fft_tag, complex*** w_array, complex* 
             }
         }
     }
+}
+
+void FFT::fft_update(double update_data)
+{
+    memcpy(fft_data,fft_data+1,(fft_n-1)*double_size);
+    fft_data[fft_n-1]=update_data;
+    fft(fft_data, fft_result);
+}
+
+int main()
+{
+    FFT my_fft(1024);
+
+    time_t start=0,stop=0;
+    start=clock();
+
+    for(int i=0; i<1000; ++i)
+    {
+        my_fft.fft_update(1024+i);
+    }
+
+    // for(int i=0; i<my_fft.fft_n; ++i)
+    //     my_fft.fft_data[i]=i+1;
+    // my_fft.fft(my_fft.fft_data, my_fft.fft_result);
+    // for(int i=0;i<my_fft.fft_n;i++)
+    //     printf("(%.4f, %.4fi) ", my_fft.fft_result[i].real, my_fft.fft_result[i].imag);
+    
+    stop=clock();
+    printf("\nTime used: %f ms",(double)(stop-start));
+
+    return 0;
 }

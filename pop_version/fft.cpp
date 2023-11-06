@@ -16,7 +16,6 @@ typedef struct
 
 double fft_data[fft_n]={0};
 complex fft_result[fft_n]={0};
-complex a, b, w;
 
 void rader_array(uint16_t* array, uint16_t n)
 {
@@ -35,7 +34,7 @@ void rader_array(uint16_t* array, uint16_t n)
     }
 }
 
-void trigonometric_array(complex*** w_array, uint16_t n, uint16_t storey_sum)
+void trigonometric_matrix(complex*** w_array, uint16_t n, uint16_t storey_sum)
 {
     for(uint16_t storey_cnt=0, n_half=0; storey_cnt<storey_sum; ++storey_cnt)
     {
@@ -54,6 +53,7 @@ void trigonometric_array(complex*** w_array, uint16_t n, uint16_t storey_sum)
 
 void fft(double* fft_data, uint16_t* fft_tag, complex*** w_array, complex* fft_result, uint16_t n, uint16_t storey_sum)
 {
+    complex a, b, w;
     for(uint16_t i=0; i<n; ++i)
     {
         fft_result[i].real=fft_data[fft_tag[i]];
@@ -100,7 +100,7 @@ int main()
     }
 
     rader_array(fft_tag, fft_n);
-    trigonometric_array(w_array, fft_n, storey_sum);
+    trigonometric_matrix(w_array, fft_n, storey_sum);
 
     for(int i=0; i<fft_n; ++i)
         fft_data[i]=i+1;
