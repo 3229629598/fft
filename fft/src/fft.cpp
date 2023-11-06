@@ -128,5 +128,11 @@ int main()
     stop=clock();
     printf("\nTime used: %f ms",(double)(stop-start));
 
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+    {
+        printf("\nMemory used: %d kb", pmc.WorkingSetSize / 1024);
+    }
+    
     return 0;
 }

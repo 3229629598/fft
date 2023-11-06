@@ -6,6 +6,8 @@
 #include "string.h"
 #include "stdlib.h"
 #include "time.h"
+#include "windows.h"
+#include <psapi.h>
 #define _USE_MATH_DEFINES
 #include "math.h"
 
