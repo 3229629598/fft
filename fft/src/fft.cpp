@@ -6,19 +6,22 @@ FFT::FFT(uint16_t n)
     storey_sum=log(fft_n)/log(2);
     double_size=sizeof(double);
     
-    fft_data=(double*)malloc(fft_n*sizeof(double));
-    memset(fft_data,0,sizeof(fft_data));
-    fft_tag=(uint16_t*)malloc(fft_n*sizeof(uint16_t));
-    memset(fft_tag,0,sizeof(fft_tag));
-    w_array=(double**)malloc(storey_sum*sizeof(double*));
-    for(int i=0; i<storey_sum; ++i)
+    do
     {
-        w_array[i]=(double*)malloc(fft_n*sizeof(double));
-        memset(w_array[i],0,sizeof(w_array[i]));
-    }
-    fft_result=(complex*)malloc(fft_n*sizeof(complex));
-    memset(fft_result,0,sizeof(fft_result));
-
+        fft_data=(double*)malloc(fft_n*sizeof(double));
+        memset(fft_data,0,fft_n*sizeof(double));
+        fft_tag=(uint16_t*)malloc(fft_n*sizeof(uint16_t));
+        memset(fft_tag,0,fft_n*sizeof(uint16_t));
+        w_array=(double**)malloc(storey_sum*sizeof(double*));
+        for(int i=0; i<storey_sum; ++i)
+        {
+            w_array[i]=(double*)malloc(fft_n*sizeof(double));
+            memset(w_array[i],0,fft_n*sizeof(double));
+        }
+        fft_result=(complex*)malloc(fft_n*sizeof(complex));
+        memset(fft_result,0,fft_n*sizeof(complex));
+    } while (fft_data==NULL||fft_tag==NULL||w_array==NULL||fft_result==NULL);
+    
     rader_array(fft_tag);
     trigonometric_matrix(w_array);
 }
