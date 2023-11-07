@@ -84,17 +84,17 @@ void FFT::fft(double* fft_data, complex* fft_result)
         {
             for(uint16_t k=0; k<n_half; ++k)
             {
-                w.real=w_array[storey_cnt][pair_site+k];
-                w.imag=w_array[storey_cnt][pair_site+k+n_half];
-                a.real=fft_result[pair_site+k].real;
-                a.imag=fft_result[pair_site+k].imag;
-                b.real=fft_result[pair_site+k+n_half].real;
-                b.imag=fft_result[pair_site+k+n_half].imag;
+                w1=w_array[storey_cnt][pair_site+k];
+                w2=w_array[storey_cnt][pair_site+k+n_half];
+                a1=fft_result[pair_site+k].real;
+                a2=fft_result[pair_site+k].imag;
+                b1=fft_result[pair_site+k+n_half].real;
+                b2=fft_result[pair_site+k+n_half].imag;
 
-                fft_result[pair_site+k].real               =a.real + w.real * b.real - w.imag * b.imag;
-                fft_result[pair_site+k].imag             =a.imag + w.real * b.imag + w.imag * b.real;
-                fft_result[pair_site+k+n_half].real  =a.real - w.real * b.real + w.imag * b.imag;
-                fft_result[pair_site+k+n_half].imag=a.imag - w.real * b.imag - w.imag * b.real;
+                fft_result[pair_site+k].real               =a1 + w1 * b1 - w2 * b2;
+                fft_result[pair_site+k].imag             =a2 + w1 * b2 + w2 * b1;
+                fft_result[pair_site+k+n_half].real  =a1 - w1 * b1 + w2 * b2;
+                fft_result[pair_site+k+n_half].imag=a2 - w1 * b2 - w2 * b1;
             }
         }
     }
