@@ -2,8 +2,8 @@
 
 FFT::FFT(uint16_t n)
 {
-    fft_n=n;
-    storey_sum=log(fft_n)/log(2);
+    storey_sum=log(n)/log(2);
+    fft_n=1<<storey_sum;
     double_size=sizeof(double);
     
     do
