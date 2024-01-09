@@ -7,7 +7,6 @@
 #include "stdlib.h"
 #include "time.h"
 #include "windows.h"
-#include <psapi.h>
 #define _USE_MATH_DEFINES
 #include "math.h"
 
@@ -18,18 +17,15 @@ class FFT
     FFT(uint16_t n); //input parameter: number of terms in fft
     ~FFT();
 
-    typedef struct
-    {
-        double real;
-        double imag;
-    }complex;
-
     uint16_t fft_n;
-    double* fft_data;
-    complex* fft_result;
+    double* fft_input_real;
+    double* fft_input_imag;
+    double* fft_output_real;
+    double* fft_output_imag;
 
-    void fft(double* fft_data, complex* fft_result);
+    void fft(double* fft_input_real, double* fft_input_imag, double* fft_output_real, double* fft_output_imag);
     void fft_update(double update_data);
+    void ifft(double* ifft_output_real, double* ifft_output_imag, double* ifft_output_sqrt);
 
     private:
 
