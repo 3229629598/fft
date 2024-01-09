@@ -96,12 +96,12 @@ void FFT::fft(double* fft_input_real, double* fft_input_imag, double* fft_output
         {
             for(uint16_t k=0; k<n_half; ++k)
             {
-                w1=w_array[storey_cnt][pair_site+k];
-                w2=w_array[storey_cnt][pair_site+k+n_half];
-                a1=fft_output_real[pair_site+k];
-                a2=fft_output_imag[pair_site+k];
-                b1=fft_output_real[pair_site+k+n_half];
-                b2=fft_output_imag[pair_site+k+n_half];
+                double w1=w_array[storey_cnt][pair_site+k];
+                double w2=w_array[storey_cnt][pair_site+k+n_half];
+                double a1=fft_output_real[pair_site+k];
+                double a2=fft_output_imag[pair_site+k];
+                double b1=fft_output_real[pair_site+k+n_half];
+                double b2=fft_output_imag[pair_site+k+n_half];
 
                 double w1xb1=w1*b1;
                 double w1xb2=w1*b2;
@@ -139,12 +139,12 @@ void FFT::ifft(double* ifft_output_real, double* ifft_output_imag, double* ifft_
         {
             for(uint16_t k=0; k<n_half; ++k)
             {
-                w1=w_array[storey_cnt][pair_site+k];
-                w2=w_array[storey_cnt][pair_site+k+n_half];
-                a1=ifft_output_real[pair_site+k];
-                a2=ifft_output_imag[pair_site+k];
-                b1=ifft_output_real[pair_site+k+n_half];
-                b2=ifft_output_imag[pair_site+k+n_half];
+                double w1=w_array[storey_cnt][pair_site+k];
+                double w2=w_array[storey_cnt][pair_site+k+n_half];
+                double a1=ifft_output_real[pair_site+k];
+                double a2=ifft_output_imag[pair_site+k];
+                double b1=ifft_output_real[pair_site+k+n_half];
+                double b2=ifft_output_imag[pair_site+k+n_half];
 
                 double w1xb1=w1*b1;
                 double w1xb2=w1*b2;

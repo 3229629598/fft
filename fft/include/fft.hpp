@@ -33,7 +33,6 @@ class FFT
     uint16_t double_size;
     uint16_t* fft_tag;
     double** w_array;
-    double a1,a2,b1,b2,w1,w2;
 
     void rader_array(uint16_t* array);
     void trigonometric_matrix(double** w_array);
